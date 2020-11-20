@@ -1,4 +1,4 @@
-## Streamlit + Hugging Face = Fun!
+## Streamlit 🎈 + Hugging Face 🤗 = Fun 🎉
 
 This app demonstrates a live Twitter dataset explorer using HuggingFace's Zero-Shot text classification capability.
 

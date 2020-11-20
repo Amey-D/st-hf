@@ -1,4 +1,4 @@
-streamlit
+streamlit-nightly
 transformers[torch]
 requests
 pandas

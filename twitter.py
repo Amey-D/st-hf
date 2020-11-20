@@ -178,30 +178,28 @@ def fetch_and_analyze_tweets(
     predicted_categories = []
     prediction_confidence = []
 
-    c1, c2 = st.beta_columns(2)
 
-    with c1:
+    with st.beta_expander('Expand to see raw tweets'):
         st.table(df)
 
-    with c2:
-        predictions = _get_zero_shot_classification(
-            df['text'].tolist(),
-            candidate_categories,
-        )
-        print(predictions)
-        for prediction in predictions:
-            labels = prediction['labels']
-            scores = prediction['scores']
-            if scores[0] > 0.5:
-                predicted_categories.append(labels[0])
-                prediction_confidence.append(scores[0])
-                hist.update({labels[0]: 1})
-            else:
-                predicted_categories.append('unknown')
-                prediction_confidence.append(0)
-                hist.update({'unknown': 1})
+    predictions = _get_zero_shot_classification(
+        df['text'].tolist(),
+        candidate_categories,
+    )
+    print(predictions)
+    for prediction in predictions:
+        labels = prediction['labels']
+        scores = prediction['scores']
+        if scores[0] > 0.5:
+            predicted_categories.append(labels[0])
+            prediction_confidence.append(scores[0])
+            hist.update({labels[0]: 1})
+        else:
+            predicted_categories.append('unknown')
+            prediction_confidence.append(0)
+            hist.update({'unknown': 1})
 
-        df['predicted_category'] = predicted_categories
-        df['prediction_confidence'] = prediction_confidence
-        st.write(hist)
-        st.bar_chart(pd.DataFrame.from_dict(hist, orient='index').reset_index())
+    df['predicted_category'] = predicted_categories
+    df['prediction_confidence'] = prediction_confidence
+    st.write(hist)
+    st.bar_chart(pd.DataFrame.from_dict(hist, orient='index').reset_index())
